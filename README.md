@@ -1,4 +1,4 @@
-Added Andre Garivay to README
+# LANParty
 Hi Alex
 
 Authors:
