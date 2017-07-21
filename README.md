@@ -1,11 +1,6 @@
 # LANParty
 Hi Alex
 
-<<<<<<< HEAD
-
 Authors:
-Leonel Chacon - Undergrad at UT - Dallas
-=======
-Authors:
-Andre Garivay - University of Nebraska-Lincoln, Software Engineering
->>>>>>> 9c10f325e36ba0b3b33c6dd57ff75669c653b376
+NaKayla Bruno - Howard University, Computer Science
+>>>>>>> 3c4727507bc2b3acac7b244ac0fb22cc9d631550
