@@ -10,6 +10,14 @@ from google.appengine.ext import ndb
 
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
+class User(ndb.Model):
+    first_name = ndb.StringProperty()
+    last_name = ndb.StringProperty()
+    job = ndb.StringProperty()
+    city = ndb.StringProperty()
+    state = ndb.StringProperty()
+    bio = ndb.StringProperty()
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         cur_user = users.get_current_user()
