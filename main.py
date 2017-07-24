@@ -26,32 +26,33 @@ class MainPage(webapp2.RequestHandler):
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
 
-class Signup(webapp2.RequestHandler):
-    def get(self):
+class Help(webapp2.RequestHandler):
+    def post(self):
         cur_user = users.get_current_user()
         email = cur_user.email()
-        key = ndb.Key('User', email)
-        user_email = key.get()
-        if not email:
-            template = jinja_env.get_template('signup.html')
-            self.response.out.write(template.render())
-        else:
-            self.redirect('/profile')
+        if email:
+            key = ndb.Key('User', email)
+            user_email = key.get()
+            if not user_email:
+                self.redirect('/signup')
+            else:
+                self.redirect('/profile')
+        log_url = users.create_logout_url('/')
+        variables = {
+            'log_url': log_url
+        }
+        template = jinja_env.get_template('profile.html')
+        self.response.out.write(template.render(variables))
 
+class Signup(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_env.get_template('signup.html')
+        self.response.out.write(template.render())
 
 class Login(webapp2.RequestHandler):
     def get(self):
-        cur_user = users.get_current_user()
-        logging.warning(cur_user)
-        email = cur_user.email()
-        key = ndb.Key('User', email)
-        user_email = key.get()
-        if not email:
-            template = jinja_env.get_template('signup.html')
-            self.response.out.write(template.render())
-        else:
-            log_url = users.create_login_url('/')
-            self.redirect('/profile')
+        log_url = users.create_login_url('/')
+        self.redirect('/start')
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
@@ -60,27 +61,12 @@ class ChatHandler(webapp2.RequestHandler):
 
 class Profile(webapp2.RequestHandler):
     def post(self):
-        log_url = users.create_logout_url('/')
-        first_name = self.request.get('first_name')
-        last_name = self.request.get('last_name')
-        job = self.request.get('job')
-        city = self.request.get('city')
-        state = self.request.get('state')
-        bio = self.request.get('bio')
-        variables = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'job': job,
-            'city': city,
-            'state': state,
-            'bio': bio,
-            'log_url': log_url
-        }
         template = jinja_env.get_template('profile.html')
-        self.response.out.write(template.render(variables))
+        self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/start', Help),
     ('/signup', Signup),
     ('/login', Login),
     ('/profile', Profile)
