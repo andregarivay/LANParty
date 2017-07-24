@@ -9,7 +9,7 @@ import urllib2
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
-jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
 class User(ndb.Model):
     first_name = ndb.StringProperty()
@@ -22,14 +22,13 @@ class User(ndb.Model):
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        log_url = ''
-        template = jinja_env.get_template('main.html')
+        template = jinja_environment.get_template('main.html')
         self.response.out.write(template.render())
 
-class Help(webapp2.RequestHandler):
-    def post(self):
+class Login(webapp2.RequestHandler):
+    def get(self):
         cur_user = users.get_current_user()
-        email = cur_user.email()
+        email = cur_user.user_email()
         if email:
             key = ndb.Key('User', email)
             user_email = key.get()
@@ -37,37 +36,31 @@ class Help(webapp2.RequestHandler):
                 self.redirect('/signup')
             else:
                 self.redirect('/profile')
-        log_url = users.create_logout_url('/')
-        variables = {
-            'log_url': log_url
-        }
-        template = jinja_env.get_template('profile.html')
-        self.response.out.write(template.render(variables))
 
 class Signup(webapp2.RequestHandler):
     def get(self):
-        template = jinja_env.get_template('signup.html')
+        template = jinja_environment.get_template('signup.html')
         self.response.out.write(template.render())
 
-class Login(webapp2.RequestHandler):
-    def get(self):
-        log_url = users.create_login_url('/')
-        self.redirect('/start')
+class Profile(webapp2.RequestHandler):
+    def post(self):
+        first_name = self.response.get(first_name)
+        variables = {
+            'first_name': first_name
+        }
+        template = jinja_environment.get_template('profile.html')
+        self.response.out.write(template.render(variables))
+
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         if cur_user:
             unique_user_id = random.randint(0, 1000000)
 
-class Profile(webapp2.RequestHandler):
-    def post(self):
-        template = jinja_env.get_template('profile.html')
-        self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/start', Help),
-    ('/signup', Signup),
     ('/login', Login),
-    ('/profile', Profile)
+    ('/signup', Signup),
+    ('/profile', Profile),
 ], debug= True)
