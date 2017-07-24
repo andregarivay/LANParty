@@ -48,7 +48,7 @@ class Login(webapp2.RequestHandler):
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         if cur_user:
-        
+            i = 1
 
 
 
