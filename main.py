@@ -11,18 +11,6 @@ from google.appengine.ext import ndb
 
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
-<<<<<<< HEAD
-=======
-class User(ndb.Model):
-    first_name = ndb.StringProperty()
-    last_name = ndb.StringProperty()
-    job = ndb.StringProperty()
-    city = ndb.StringProperty()
-    state = ndb.StringProperty()
-    bio = ndb.StringProperty()
-    email = ndb.StringProperty(indexed = True)
-
->>>>>>> 78c1eace37daa8f2ba713c8838adb6cdc33b7d79
 class MainPage(webapp2.RequestHandler):
     def get(self):
         log_url = ''
@@ -55,17 +43,16 @@ class Login(webapp2.RequestHandler):
         log_url = users.create_login_url('/')
         self.redirect(log_url)
 
-<<<<<<< HEAD
+
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         if cur_user:
             unique_user_id = random.randint(0, 1000000)
-=======
+
 class Profile(webapp2.RequestHandler):
     def post(self):
         template = jinja_env.get_template('templates/profile.html')
         self.response.out.write(template.render())
->>>>>>> 78c1eace37daa8f2ba713c8838adb6cdc33b7d79
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
