@@ -41,8 +41,17 @@ class Signup(webapp2.RequestHandler):
 
 class Login(webapp2.RequestHandler):
     def get(self):
-        log_url = users.create_login_url('/')
-        self.redirect('/profile')
+        cur_user = users.get_current_user()
+        logging.warning(cur_user)
+        email = cur_user.email()
+        key = ndb.Key('User', email)
+        user_email = key.get()
+        if not email:
+            template = jinja_env.get_template('signup.html')
+            self.response.out.write(template.render())
+        else:
+            log_url = users.create_login_url('/')
+            self.redirect('/profile')
 
 
 class ChatHandler(webapp2.RequestHandler):
