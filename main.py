@@ -18,8 +18,12 @@ class MainPage(webapp2.RequestHandler):
             template = jinja_env.get_template('main.html')
             self.response.out.write(template.render())
         else:
+            log_url = users.create_logout_url('/')
+            variables = {
+                'log_url': log_url
+            }
             template = jinja_env.get_template('profile.html')
-            self.response.out.write(template.render())
+            self.response.out.write(template.render(variables))
 
 class Signup(webapp2.RequestHandler):
     def get(self):
