@@ -4,40 +4,15 @@
     font-size: 100px;
     text-align: center;
     animation: fadein 8s;
-    -moz-animation: fadein 2s; /* Firefox */
     -webkit-animation: fadein 5s; /* Safari and Chrome */
-    -o-animation: fadein 2s; /* Opera */
-}
-@keyframes fadein {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-moz-keyframes fadein { /* Firefox */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
+  }
+
 @-webkit-keyframes fadein { /* Safari and Chrome */
     from {
         opacity:0;
     }
     to {
         opacity:1;
-    }
-}
-@-o-keyframes fadein { /* Opera */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity: 1;
     }
 }
 
@@ -49,10 +24,21 @@
 }
 
 .middle{
+  display: flex;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  justify-content: center;
   text-align: center;
+  animation: fadein 8s;
+  -webkit-animation: fadein 8s; /* Safari and Chrome */
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
 }
 
 
@@ -63,3 +49,19 @@ input[type=submit] {
 }
 
 div#frm *{display:inline}
+
+body {
+    background-image: url("mainbackground.jpg");
+    background-repeat: no-repeat;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

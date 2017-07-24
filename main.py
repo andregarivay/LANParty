@@ -20,11 +20,21 @@ class User(ndb.Model):
     bio = ndb.StringProperty()
     email = ndb.StringProperty(indexed = True)
 
+class Rooms(ndb.Model):
+    User1 = User
+    #User2 = user.id:
+    comments = ndb.StringProperty()
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         log_url = ''
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
+
+class RoomHandler(webapp2.RequestHandler):
+    def get(self):
+        for room in Rooms:
+            i=1            
 
 class Signup(webapp2.RequestHandler):
     def get(self):
@@ -57,8 +67,8 @@ class Login(webapp2.RequestHandler):
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         if cur_user:
-            i = 1
-
+            key = ndb.Key('User', email)
+            user_email = key.get()
 
 
 class Profile(webapp2.RequestHandler):
