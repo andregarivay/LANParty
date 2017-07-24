@@ -56,7 +56,9 @@ class Login(webapp2.RequestHandler):
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         if cur_user:
-            unique_user_id = random.randint(0, 1000000)
+        
+
+
 
 class Profile(webapp2.RequestHandler):
     def post(self):
