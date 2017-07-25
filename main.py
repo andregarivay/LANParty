@@ -63,14 +63,6 @@ class Login(webapp2.RequestHandler):
 class Signup(webapp2.RequestHandler):
     def get(self):
         cur_user = users.get_current_user()
-        email = cur_user.email()
-        if email:
-            key = ndb.Key('User', email)
-            user_email = key.get()
-            if not user_email:
-                template = jinja_env.get_template('signup.html')
-                self.response.out.write(template.render())
-            else:
         if cur_user:
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)

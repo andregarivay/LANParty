@@ -4,17 +4,26 @@
   <head>
     <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
 
-    <title>Profile</title>
+    <title> Counselor Profile - Hi, Alex! </title>
+
+    <style>
+    body{
+      background-color: #C0DFEE;
+    }
+    </style>
 
   </head>
 
   <body>
 
-    <a href = "{{ log_url }}">Logout</a>
+    <a href = "{{ log_url }}"><button class="logout" type="submit" value="Submit">Logout</a></button>
     {{ first_name }} {{ last_name }}
     {{ job }}
     {{ city }}, {{ state }}
     {{ bio }}
+
+
+
 
   </body>
 
