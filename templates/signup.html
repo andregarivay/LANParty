@@ -17,7 +17,7 @@ body{
   <body>
     <h1>Sign up to be a counselor here!</h1>
 
-    <form method="post" action="/profile">
+    <form method="post" action="/profile" enctype="multipart/form-data">
       <input class="inputboxes" type="text" name="first_name" placeholder="First Name" required='required'>
       <br/>
       <br/>
@@ -35,11 +35,12 @@ body{
       <br/>
       <br/>
       <input class="inputboxes" type="text" name="bio" placeholder="Short Bio" required='required' maxlength="600">
-      <br/>
-      <br/>
+      <br>
+      <br>
+      <input type="file" name="picture" required='required' maxlength="600">
+      <br>
+      <br>
       <input class="button" type="submit" value="Create Account" style="background-color: #ADCBDA; color: black;">
-      <!-- <br/>
-      <input type="file" name="" -->
     </form>
 
   </body>

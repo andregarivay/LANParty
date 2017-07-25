@@ -1,3 +1,4 @@
+import binascii
 import jinja2
 import random
 import logging
@@ -20,7 +21,7 @@ class User(ndb.Model):
     bio = ndb.StringProperty()
     email = ndb.StringProperty()
     identity = ndb.StringProperty()
-    image = ndb.BlobProperty()
+    picture = ndb.BlobProperty()
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -78,7 +79,6 @@ class Profile(webapp2.RequestHandler):
         cur_user = users.get_current_user()
         user_key = ndb.Key('User', users.get_current_user().user_id())
         user = user_key.get()
-
         user = User(
             first_name = self.request.get('first_name'),
             last_name = self.request.get('last_name'),
@@ -87,11 +87,13 @@ class Profile(webapp2.RequestHandler):
             state = self.request.get('state'),
             bio = self.request.get('bio'),
             email = self.request.get('email'),
-            identity = cur_user.user_id()
+            identity = cur_user.user_id(),
+            picture = self.request.get('picture')
         )
         user.key = user_key
         user.put()
         log_url = users.create_logout_url('/')
+        picture = "data:image;base64," + binascii.b2a_base64(user.picture)
         variables = {
             'first_name': user.first_name,
             'last_name': user.last_name,
@@ -99,7 +101,8 @@ class Profile(webapp2.RequestHandler):
             'city': user.city,
             'state': user.state,
             'bio': user.bio,
-            'log_url': log_url
+            'log_url': log_url,
+            'picture': picture
         }
         template = jinja_env.get_template('profile.html')
         self.response.out.write(template.render(variables))
@@ -114,6 +117,7 @@ class Profile(webapp2.RequestHandler):
                 user.key = user_key
                 user.put()
                 log_url = users.create_logout_url('/')
+                picture = "data:image;base64," + binascii.b2a_base64(user.picture)
                 variables = {
                     'first_name': user.first_name,
                     'last_name': user.last_name,
@@ -121,7 +125,8 @@ class Profile(webapp2.RequestHandler):
                     'city': user.city,
                     'state': user.state,
                     'bio': user.bio,
-                    'log_url': log_url
+                    'log_url': log_url,
+                    'picture': picture
                 }
                 template = jinja_env.get_template('profile.html')
                 self.response.out.write(template.render(variables))
