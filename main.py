@@ -72,10 +72,21 @@ class Profile(webapp2.RequestHandler):
         self.response.out.write(template.render(variables))
 
     def get(self):
-        first_name = User.first_name
+        user = User()
+        first_name = user.first_name
+        last_name = user.last_name
+        job = user.job
+        city = user.city
+        state = user.state
+        bio = user.bio
         log_url = users.create_logout_url('/')
         variables = {
             'first_name': first_name,
+            'last_name': last_name,
+            'job': job,
+            'city': city,
+            'state': state,
+            'bio': bio,
             'log_url': log_url
         }
         template = jinja_environment.get_template('profile.html')
