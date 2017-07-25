@@ -67,7 +67,7 @@ class Signup(webapp2.RequestHandler):
             key = ndb.Key('User', email)
             user_email = key.get()
             if not user_email:
-                template = jinja_environment.get_template('signup.html')
+                template = jinja_env.get_template('signup.html')
                 self.response.out.write(template.render())
             else:
                 self.redirect('/profile')
