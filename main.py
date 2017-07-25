@@ -22,7 +22,7 @@ class User(ndb.Model):
 
 class Rooms(ndb.Model):
     User1 = User
-    #User2 = user.id:
+    User2 = user.id
     comments = ndb.StringProperty()
 
 class MainPage(webapp2.RequestHandler):
@@ -33,8 +33,10 @@ class MainPage(webapp2.RequestHandler):
 
 class RoomHandler(webapp2.RequestHandler):
     def get(self):
-        for room in Rooms:
-            i=1            
+        z = 1
+
+
+
 
 class Signup(webapp2.RequestHandler):
     def get(self):
