@@ -80,6 +80,8 @@ class Signup(webapp2.RequestHandler):
 class Profile(webapp2.RequestHandler):
     def post(self):
         cur_user = users.get_current_user()
+        user_key = ndb.Key('User', users.get_current_user().user_id())
+        user = user_key.get()
         user = User(
             first_name = self.request.get('first_name'),
             last_name = self.request.get('last_name'),
@@ -90,6 +92,7 @@ class Profile(webapp2.RequestHandler):
             email = self.request.get('email'),
             identity = cur_user.user_id()
         )
+        user.key = user_key
         user.put()
         log_url = users.create_logout_url('/')
         variables = {
