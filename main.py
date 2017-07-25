@@ -137,9 +137,9 @@ class Room(Rooms):
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         if not User:
-
+            i=1
         else:
-
+            i=1
         template= jinja_env.get_template('chatroom.html')
         self.response.out.write(template.render())
 
