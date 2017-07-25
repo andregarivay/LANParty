@@ -5,28 +5,38 @@
 
     <title>Sign Up</title>
 
-    <link rel="stylesheet" type="text/css" href="resources/signup.css">
-
+    <link rel="stylesheet" type="text/css" href="../resources/signup.css">
+<style>
+body{
+  background-color: #C0DFEE;
+}
+</style>
   </head>
 
   <body>
     <h1>Sign up to be a counselor here!</h1>
 
     <form method="post" action="/profile">
-      <input type="text" name="first_name" value="First Name">
-      <br>
-      <input type="text" name="last_name" value="Last Name">
-      <br>
-      <input type="text" name="email" value="Email">
-      <br>
-      <input type="text" name="job" value="Job Title/Major">
-      <br>
-      <input type="text" name="city" value="City">
-      <input type="text" name="2 letter state code" value="State"> <!-- Make sure two-letter state code is used -->
-      <br>
-      <input type="text" name="bio" value="Bio">
-      <br>
-      <input type="submit" value="Create My Account">
+      <input class="inputboxes" type="text" name="first_name" placeholder="First Name">
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name="last_name" placeholder="Last Name">
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name="email" placeholder="Gmail">
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name="job" placeholder="Job Title">
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" placeholder="City">
+      <input class="statebox" type="text" name="state" placeholder="State"> <!-- Make sure two-letter state code is used -->
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name="bio" placeholder="Short Bio">
+      <br/>
+      <br/>
+      <input class="button" type="submit" value="Create Account" style="background-color: #ADCBDA; color: black; border: black;">
     </form>
 
   </body>

@@ -42,10 +42,7 @@ class Login(webapp2.RequestHandler):
         cur_user = users.get_current_user()
         logging.info(dir(cur_user))
         if cur_user:
-            query = cur_user.query()
-            user = query.fetch()
-            logging.info(user)
-            identity = user.identity
+            identity = cur_user.user_id()
             logging.warning(identity)
             user_key = ndb.Key('User', identity)
             logging.warning(user_key)
@@ -67,10 +64,7 @@ class Signup(webapp2.RequestHandler):
     def get(self):
         cur_user = users.get_current_user()
         if cur_user:
-            query = cur_ser.query()
-            user = query.fetch()
-            logging.info(user)
-            identity = user.idetity
+            identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
             user = user_key.get()
             if user:
@@ -113,10 +107,7 @@ class Profile(webapp2.RequestHandler):
     def get(self):
         cur_user = users.get_current_user()
         if cur_user:
-            query = cur_user.query()
-            user = query.fetch()
-            logging.info(user)
-            identity = user.identity
+            identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
             user = user_key.get()
             if user:
