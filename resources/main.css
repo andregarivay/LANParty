@@ -29,6 +29,7 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  font-size: inherit;
   animation: fadein 8s;
   -webkit-animation: fadein 8s; /* Safari and Chrome */
 }
@@ -46,6 +47,7 @@ input[type=submit] {
   border: none; /*rewriting standard style, it is necessary to be able to change the size*/
   height: 100px;
   width: 200px;
+  font-size: inherit;
 }
 
 div#frm *{display:inline}
@@ -63,5 +65,5 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: inherit;
 }
