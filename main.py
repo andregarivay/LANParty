@@ -9,7 +9,7 @@ import urllib2
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
-jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
 class User(ndb.Model):
     first_name = ndb.StringProperty()
@@ -20,10 +20,34 @@ class User(ndb.Model):
     bio = ndb.StringProperty()
     email = ndb.StringProperty(indexed = True)
 
+class Rooms(ndb.Model):
+    User1 = User
+    #User2 = user.id:
+    comments = ndb.StringProperty()
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('main.html')
+        log_url = ''
+        template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
+
+class RoomHandler(webapp2.RequestHandler):
+    def get(self):
+        for room in Rooms:
+            i=1
+
+class Signup(webapp2.RequestHandler):
+    def get(self):
+        cur_user = users.get_current_user()
+        email = cur_user.email()
+        key = ndb.Key('User', email)
+        user_email = key.get()
+        if not email:
+            template = jinja_env.get_template('signup.html')
+            self.response.out.write(template.render())
+        else:
+            self.redirect('/profile')
+
 
 class Login(webapp2.RequestHandler):
     def get(self):
@@ -89,7 +113,7 @@ class Profile(webapp2.RequestHandler):
             'bio': bio,
             'log_url': log_url
         }
-        template = jinja_environment.get_template('profile.html')
+        template = jinja_env.get_template('profile.html')
         self.response.out.write(template.render(variables))
 
 
@@ -102,7 +126,7 @@ class ChatHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/login', Login),
     ('/signup', Signup),
-    ('/profile', Profile),
+    ('/login', Login),
+    ('/profile', Profile)
 ], debug= True)
