@@ -56,8 +56,9 @@ class Login(webapp2.RequestHandler):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        i=1
-
+        if cur_user:
+            User_key = ndb.Key( 'User', email )
+            userEmail = key.get()
 
 class Profile(webapp2.RequestHandler):
     def post(self):
@@ -81,12 +82,12 @@ class Profile(webapp2.RequestHandler):
         self.response.out.write(template.render(variables))
 
 class Rooms(ndb.Model):
-    User1 = User
-    #User2 = user.key
-    comments = ndb.StringProperty()
+        User1 = User
+        #User2 = user.key
+        comments = ndb.StringProperty()
 
 class Room(Rooms):
-    url = []
+    url ={}
 
 
 app = webapp2.WSGIApplication([

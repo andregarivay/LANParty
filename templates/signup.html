@@ -3,7 +3,8 @@
 
   <head>
 
-    <title>Sign Up</title>
+    <title>Sign Up - Hi, Alex!</title>
+    <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
 
     <link rel="stylesheet" type="text/css" href="../resources/signup.css">
 <style>
@@ -17,26 +18,26 @@ body{
     <h1>Sign up to be a counselor here!</h1>
 
     <form method="post" action="/profile">
-      <input class="inputboxes" type="text" name="first_name" placeholder="First Name">
+      <input class="inputboxes" type="text" name="first_name" placeholder="First Name" required='required'>
       <br/>
       <br/>
-      <input class="inputboxes" type="text" name="last_name" placeholder="Last Name">
+      <input class="inputboxes" type="text" name="last_name" placeholder="Last Name" required='required'>
       <br/>
       <br/>
-      <input class="inputboxes" type="text" name="email" placeholder="Gmail">
+      <input class="inputboxes" type="text" name="email" placeholder="Gmail" required='required'>
       <br/>
       <br/>
-      <input class="inputboxes" type="text" name="job" placeholder="Job Title">
+      <input class="inputboxes" type="text" name="job" placeholder="Job Title" required='required'>
       <br/>
       <br/>
-      <input class="inputboxes" type="text" placeholder="City">
-      <input class="statebox" type="text" name="state" placeholder="State"> <!-- Make sure two-letter state code is used -->
+      <input class="inputboxes" type="text" placeholder="City" required='required'>
+      <input class="statebox" type="text" name="state" placeholder="State" required='required' maxlength="2"> <!-- Make sure two-letter state code is used -->
       <br/>
       <br/>
-      <input class="inputboxes" type="text" name="bio" placeholder="Short Bio">
+      <input class="inputboxes" type="text" name="bio" placeholder="Short Bio" required='required' maxlength="600">
       <br/>
       <br/>
-      <input class="button" type="submit" value="Create Account" style="background-color: #ADCBDA; color: black; border: black;">
+      <input class="button" type="submit" value="Create Account" style="background-color: #ADCBDA; color: black;">
     </form>
 
   </body>
