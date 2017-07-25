@@ -20,28 +20,11 @@ class User(ndb.Model):
     bio = ndb.StringProperty()
     email = ndb.StringProperty(indexed = True)
 
-class Rooms(ndb.Model):
-    User1 = User
-    User2 = user.id
-    comments = ndb.StringProperty()
-
 class MainPage(webapp2.RequestHandler):
     def get(self):
         log_url = ''
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
-
-class RoomHandler(webapp2.RequestHandler):
-    def get(self):
-<<<<<<< HEAD
-        z = 1
-
-
-
-=======
-        for room in Rooms:
-            i=1
->>>>>>> 137a36d07a83db3d4fae676755511c3d354a0034
 
 class Signup(webapp2.RequestHandler):
     def get(self):
@@ -59,58 +42,32 @@ class Signup(webapp2.RequestHandler):
 class Login(webapp2.RequestHandler):
     def get(self):
         cur_user = users.get_current_user()
-        if cur_user:
-            self.redirect('/profile')
-        else:
-            log_url = users.create_login_url('/signup')
-            self.redirect(log_url)
-
-
-class Signup(webapp2.RequestHandler):
-    def get(self):
-        cur_user = users.get_current_user()
+        logging.warning(cur_user)
         email = cur_user.email()
-        if email:
-            key = ndb.Key('User', email)
-            user_email = key.get()
-            if not user_email:
-                template = jinja_environment.get_template('signup.html')
-                self.response.out.write(template.render())
-            else:
-                self.redirect('/profile')
+        key = ndb.Key('User', email)
+        user_email = key.get()
+        if not email:
+            template = jinja_env.get_template('signup.html')
+            self.response.out.write(template.render())
+        else:
+            log_url = users.create_login_url('/')
+            self.redirect('/profile')
+
+
+class ChatHandler(webapp2.RequestHandler):
+    def get(self):
+        i=1
+
 
 class Profile(webapp2.RequestHandler):
     def post(self):
-        user = User()
-        user.first_name = self.request.get('first_name')
-        user.last_name = self.request.get('last_name')
-        user.job = self.request.get('job')
-        user.city = self.request.get('city')
-        user.state = self.request.get('state')
-        user.bio = self.request.get('bio')
-        user.put()
         log_url = users.create_logout_url('/')
-        variables = {
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'job': user.job,
-            'city': user.city,
-            'state': user.state,
-            'bio': user.bio,
-            'log_url': log_url
-        }
-        template = jinja_env.get_template('profile.html')
-        self.response.out.write(template.render(variables))
-
-    def get(self):
-        user = User()
-        first_name = user.first_name
-        last_name = user.last_name
-        job = user.job
-        city = user.city
-        state = user.state
-        bio = user.bio
-        log_url = users.create_logout_url('/')
+        first_name = self.request.get('first_name')
+        last_name = self.request.get('last_name')
+        job = self.request.get('job')
+        city = self.request.get('city')
+        state = self.request.get('state')
+        bio = self.request.get('bio')
         variables = {
             'first_name': first_name,
             'last_name': last_name,
@@ -123,12 +80,13 @@ class Profile(webapp2.RequestHandler):
         template = jinja_env.get_template('profile.html')
         self.response.out.write(template.render(variables))
 
+class Rooms(ndb.Model):
+    User1 = User
+    #User2 = user.key
+    comments = ndb.StringProperty()
 
-
-class ChatHandler(webapp2.RequestHandler):
-    def get(self):
-        if cur_user:
-            unique_user_id = random.randint(0, 1000000)
+class Room(Rooms):
+    url = []
 
 
 app = webapp2.WSGIApplication([
