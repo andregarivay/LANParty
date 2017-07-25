@@ -127,20 +127,21 @@ class Profile(webapp2.RequestHandler):
                 self.redirect('/signup')
 
 class Rooms(ndb.Model):
-    User1 = user
+    user1 = User.key
     #User2 = user.key
     comments = ndb.StringProperty()
 
 class Room(Rooms):
-    url = ('/chat?id=' +)
     count = ndb.IntegerProperty()
-
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        i =1
+        holder = {'id': Rooms.user1}
+        url = urllib.urlencode(holder)
+        unique_url = ('/chat?id=' + url)
 
-
+        template= jinja_env.get_template('chatroom.html')
+        self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
