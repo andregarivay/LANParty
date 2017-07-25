@@ -92,7 +92,7 @@ class Profile(webapp2.RequestHandler):
             'bio': user.bio,
             'log_url': log_url
         }
-        template = jinja_environment.get_template('profile.html')
+        template = jinja_env.get_template('profile.html')
         self.response.out.write(template.render(variables))
 
     def get(self):
