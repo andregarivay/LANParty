@@ -3,6 +3,7 @@
 
   <head>
     <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
+    <link rel="stylesheet" type="text/css" href="../resources/profile.css">
 
     <title> Counselor Profile - Hi, Alex! </title>
 
@@ -10,17 +11,38 @@
     body{
       background-color: #C0DFEE;
     }
+
     </style>
 
   </head>
 
   <body>
 
-    <a href = "{{ log_url }}"><button class="logout" type="submit" value="Submit">Logout</a></button>
-    {{ first_name }} {{ last_name }}
-    {{ job }}
-    {{ city }}, {{ state }}
-    {{ bio }}
+
+<br/>
+
+    <a href = "{{ log_url }}"><button class="logout" type="submit" value="Submit" style="float: right">Logout</a></button></a>
+<br/>
+<br/>
+<br/>
+<br/>
+    <h1> Hi, {{ first_name }}!</h1>
+<p>Your HiAlex Profile is as follows:</p>
+
+
+    First Name: {{ first_name }}
+    <br/>
+    <br/>
+    Last Name: {{ last_name }}
+    <br/>
+    <br/>
+    Counselor Title: {{ job }}
+    <br/>
+    <br/>
+    Hometown: {{ city }}, {{ state }}
+    <br/>
+    <br/>
+    Short Bio : {{ bio }}
 
 
 

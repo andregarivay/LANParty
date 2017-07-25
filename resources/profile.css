@@ -1,15 +1,17 @@
-.signOutText {
-	background: url("images/icon-lock.png") no-repeat 10px center;
-	border-left: 0px;
-}
-
-.button {
-    background-color: #4CAF50; /* Green */
+.logout {
+    background-color: #ADCBDA;
     border: none;
-    color: white;
-    padding: 15px 32px;
+    color: black;
+    border-radius: 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: inherit;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    width: 150px;
+    height: 60px;
+}
+
+h1 {
+  text-align: center;
 }
