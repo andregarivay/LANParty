@@ -117,7 +117,10 @@ class Profile(webapp2.RequestHandler):
                 user.key = user_key
                 user.put()
                 log_url = users.create_logout_url('/')
-                picture = "data:image;base64," + binascii.b2a_base64(user.picture)
+                if user.picture:
+                    picture = "data:image;base64," + binascii.b2a_base64(user.picture)
+                else:
+                    picture = "https://thumb1.shutterstock.com/display_pic_with_logo/615538/568463788/stock-vector-avatar-icon-vector-illustration-style-is-flat-iconic-symbol-black-color-transparent-background-568463788.jpg"
                 variables = {
                     'first_name': user.first_name,
                     'last_name': user.last_name,
