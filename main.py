@@ -136,9 +136,9 @@ class Room(Rooms):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        holder = {'id': Rooms.user1}
-        url = urllib.urlencode(holder)
-        unique_url = ('/chat?id=' + url)
+        if not User:
+
+        else:
 
         template= jinja_env.get_template('chatroom.html')
         self.response.out.write(template.render())

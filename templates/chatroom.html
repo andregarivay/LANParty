@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="resources/main.css">
     <title>Hi, Alex!</title>
     <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
   </head>
   <body>
+
+
+    <div class = "chat">
+
+      <form method="post" action="/chat">
+        <input type = "text" name = "message">
+        <input type="submit" value = "send">
+      </form>
+
+      {% for message in messages %}
+      <ul>{{ message }}</ul>
+      {% endfor %}
+
+    </div>
+
+
+    <div class = "profile">
+
+    </div>
+
+
+    <div class = "resources">
+      <h4>Additional Resources:</h4>
+      <h5>National Suicide Prevention Lifeline:</h5>
+        <a href = "tel:+1-800-273-8255">1-800-273-8255</a>
+      <h5>Anxiety and Depression Association of America:</h5>
+        <a href = "https://www.adaa.org/living-with-anxiety/ask-and-learn/resources">adaa.org<a>
+      <h5>Veterans Crisis Line:</h5>
+        <a href = "tel:+1-800-273-8255">1-800-273-8255</a>
+        <br>
+        <a href = "https://www.veteranscrisisline.net/"> veteranscrisisline.net</a>
+      <h5>National Alliance on Mental Illness</h5>
+        <a href = "https://www.nami.org/Find-Support">nami.org</a>
+    </div>
+
 
   </body>
 </html>
