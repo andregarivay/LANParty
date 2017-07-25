@@ -10,6 +10,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+messages = []
 
 class User(ndb.Model):
     first_name = ndb.StringProperty()
@@ -26,11 +27,6 @@ class MainPage(webapp2.RequestHandler):
         log_url = ''
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
-
-class RoomHandler(webapp2.RequestHandler):
-    def get(self):
-        for room in Rooms:
-            i=1
 
 class Login(webapp2.RequestHandler):
     def get(self):
@@ -126,19 +122,21 @@ class Profile(webapp2.RequestHandler):
             else:
                 self.redirect('/signup')
 
-class Rooms(ndb.Model):
-    User1 = user
-    #User2 = user.key
-    comments = ndb.StringProperty()
-
-class Room(Rooms):
-    url = ('/chat?id=' +)
-    count = ndb.IntegerProperty()
-
 
 class ChatHandler(webapp2.RequestHandler):
+
     def get(self):
-        i =1
+        template = jinja_env.get_template('chatroom.html')
+        self.response.out.write(template.render())
+
+    def post(self):
+        message = self.request.get('message')
+        messages.append(message)
+        variables = {
+            'messages': messages
+        }
+        template = jinja_env.get_template('chatroom.html')
+        self.response.out.write(template.render(variables))
 
 
 
