@@ -20,6 +20,7 @@ class User(ndb.Model):
     bio = ndb.StringProperty()
     email = ndb.StringProperty()
     identity = ndb.StringProperty()
+    image = ndb.BlobProperty()
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -77,6 +78,7 @@ class Profile(webapp2.RequestHandler):
         cur_user = users.get_current_user()
         user_key = ndb.Key('User', users.get_current_user().user_id())
         user = user_key.get()
+
         user = User(
             first_name = self.request.get('first_name'),
             last_name = self.request.get('last_name'),
@@ -140,6 +142,7 @@ class User_online(ndb.Model):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
         if not User:
             i=1
         else:
@@ -147,7 +150,11 @@ class ChatHandler(webapp2.RequestHandler):
             url = urllib.urlencode(holder)
             unique_url = ('/chat?id=' + url)
         template= jinja_env.get_template('chatroom.html')
+=======
+        template = jinja_env.get_template('chatroom.html')
+>>>>>>> 198d38a273213e2a16e0cb6fc49b54dfb90983b9
         self.response.out.write(template.render())
+
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),

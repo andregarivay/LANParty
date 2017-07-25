@@ -8,6 +8,11 @@ height: 25px;
 font-size: inherit;
 }
 
+.button{
+  text-align: center;
+  justify-content: center;
+}
+
 .statebox{
   width: 50px;
   height: 25px;

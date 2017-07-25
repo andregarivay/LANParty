@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="../resources/chatroom.css"/>
     <title>Hi, Alex!</title>
     <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
+<<<<<<< HEAD
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="resources/chat.js"></script>
+=======
+
+>>>>>>> 198d38a273213e2a16e0cb6fc49b54dfb90983b9
   </head>
   <body>
 
 
-    <div class = "chat">
-
-      <form method="post" action="/chat">
-        <input type = "text" name = "message">
-        <input type="submit" value = "send">
-      </form>
-
-      {% for message in messages %}
-      <ul>{{ message }}</ul>
-      {% endfor %}
+    <div id = "chat">
 
     </div>
 
 
-    <div class = "profile">
+    <div id = "profile">
 
     </div>
 
 
-    <div class = "resources">
+    <div id = "extra_resources">
       <h4>Additional Resources:</h4>
       <h5>National Suicide Prevention Lifeline:</h5>
         <a href = "tel:+1-800-273-8255">1-800-273-8255</a>
