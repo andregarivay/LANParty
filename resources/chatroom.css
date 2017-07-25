@@ -1,0 +1,11 @@
+#extra_resources {
+  position: fixed;
+  bottom: -340px;
+  right: 0px;
+  width: 400px;
+  height: 724px;
+  background-color: powderBlue;
+  color: darkBlue;
+  font-family: sans-serif;
+  text-align: center;
+}

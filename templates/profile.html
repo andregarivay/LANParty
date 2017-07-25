@@ -1,52 +1,49 @@
-<!DOCTYPE html>
 <html>
+<head>
+<link rel="icon" type="image/png" href="../resources/tabimage.png"/>
+<title> Counselor Profile - Hi, Alex! </title>
+<!-- Add icon library -->
+<link rel="stylesheet" type="text/css" href="../resources/profile.css">
+<style>
+body{
+  background-color: #C0DFEE;
+}
 
-  <head>
-    <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
-    <link rel="stylesheet" type="text/css" href="../resources/profile.css">
+</style>
+</head>
+<body>
 
-    <title> Counselor Profile - Hi, Alex! </title>
+  <br/>
 
-    <style>
-    body{
-      background-color: #C0DFEE;
-    }
+  <a href = "{{ log_url }}"><button class="logout" type="submit" value="Submit" style="float: right">Logout</a></button></a>
 
-    </style>
-
-  </head>
-
-  <body>
-
-
-<br/>
-
-    <a href = "{{ log_url }}"><button class="logout" type="submit" value="Submit" style="float: right">Logout</a></button></a>
-<br/>
-<br/>
-<br/>
-<br/>
-    <h1> Hi, {{ first_name }}!</h1>
-<p>Your HiAlex Profile is as follows:</p>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 
 
-    First Name: {{ first_name }}
+<div class="card">
+  <img src="img.jpg" alt="John" style="width: 300px">
+  <div class="container">
+    <p class='bigger'>{{ first_name }} {{ last_name }}</p>
+    <p> {{ job }}</p>
+    <p>{{ city }}, {{ state }}</p>
+    <p>Short Bio : {{ bio }}</p>
     <br/>
     <br/>
-    Last Name: {{ last_name }}
     <br/>
     <br/>
-    Counselor Title: {{ job }}
     <br/>
     <br/>
-    Hometown: {{ city }}, {{ state }}
-    <br/>
-    <br/>
-    Short Bio : {{ bio }}
 
+    <p><button>Connect To Live Chat</button></p>
+  </div>
+</div>
+</body>
 
-
-
-  </body>
 
 </html>
