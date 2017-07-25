@@ -141,9 +141,23 @@ class Rooms(ndb.Model):
 class Room(Rooms):
     count = ndb.IntegerProperty()
 
+class User_online(ndb.Model):
+    last_time_seen = ChatHandler
+    user1 = User.key
+
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
+        if not User:
+            i=1
+        else:
+            holder = {'id': Rooms.user1}
+            url = urllib.urlencode(holder)
+            unique_url = ('/chat?id=' + url)
+        template= jinja_env.get_template('chatroom.html')
+=======
         template = jinja_env.get_template('chatroom.html')
+>>>>>>> 198d38a273213e2a16e0cb6fc49b54dfb90983b9
         self.response.out.write(template.render())
 
 
