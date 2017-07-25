@@ -21,11 +21,6 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     identity = ndb.StringProperty()
 
-class Rooms(ndb.Model):
-    User1 = User
-    #User2 = user.id:
-    comments = ndb.StringProperty()
-
 class MainPage(webapp2.RequestHandler):
     def get(self):
         log_url = ''
@@ -131,18 +126,26 @@ class Profile(webapp2.RequestHandler):
             else:
                 self.redirect('/signup')
 
+class Rooms(ndb.Model):
+    User1 = user
+    #User2 = user.key
+    comments = ndb.StringProperty()
 
+class Room(Rooms):
+    url = ('/chat?id=' +)
+    count = ndb.IntegerProperty()
 
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        if cur_user:
-            unique_user_id = random.randint(0, 1000000)
+        i =1
+
 
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/signup', Signup),
     ('/login', Login),
-    ('/profile', Profile)
+    ('/profile', Profile),
+    ('/chat', ChatHandler)
 ], debug= True)
