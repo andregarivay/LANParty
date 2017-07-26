@@ -39,7 +39,7 @@ img {
   bottom: 0px;
   left: 0px;
   max-width: 1040px;
-
+  position: fixed;
 }
 #box{
   width: auto;
@@ -47,7 +47,7 @@ img {
   max-height: 80px;
 }
 
-input[type=submit] {
+input[type = submit] {
   border: none; /*rewriting standard style, it is necessary to be able to change the size*/
   height: 50px;
   width: 50px;
@@ -58,15 +58,26 @@ input[type=submit] {
   border-style: inset outset;
   border-radius: 10px;
   font-size: 10px;
+  position: fixed;
+  bottom: 0px;
+  left: 630px;
 }
 
 .textarea {
     width:90%;
     max-width:90%;
     max-height:30%;
+    border: 4px solid #ADCBDA;
+	  padding: 5px;
+    font-size: inherit;
 }
 
 body {
-    background-image: url("mainbackground.jpg");
+    background-image: url("backgroundupdate.jpg");
     background-repeat: no-repeat;
+}
+
+
+#biospace {
+  width: 30em;
 }
