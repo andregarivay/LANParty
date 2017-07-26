@@ -35,11 +35,7 @@ img {
 
 }
 #chatbox {
-<<<<<<< HEAD
   display: flex;
-=======
->>>>>>> 79c968c669543f467b02b0c3d993677b631d6bde
-  position: fixed;
   bottom: 0px;
   left: 0px;
   max-width: 1040px;
@@ -61,7 +57,7 @@ input[type=submit] {
   margin-right: auto;
   border-style: inset outset;
   border-radius: 10px;
-  font-size: inherit;
+  font-size: 10px;
 }
 
 .textarea {
