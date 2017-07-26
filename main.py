@@ -4,6 +4,7 @@ import random
 import logging
 import os
 import json
+import random
 import webapp2
 import urllib
 import urllib2
@@ -32,11 +33,15 @@ class MainPage(webapp2.RequestHandler):
 
 class Send(webapp2.RequestHandler):
     def get(self):
+        count = 0
         query = User.query()
         logging.warning(query)
         online_users = query.fetch()
         logging.warning(online_users)
-        user = online_users[0]
+        for user in online_users:
+            count += 1
+        coun = count - 1
+        user = online_users[coun]
         logging.warning(users)
         url = user.unique_url
         logging.warning(url)
@@ -170,16 +175,19 @@ class Room(Rooms):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        i = 100
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
         if not cur_user:
+            count = 0
             query = User.query()
             logging.warning(query)
             online_users = query.fetch()
             logging.warning(online_users)
-            user = online_users[0]
+            for user in online_users:
+                count += 1
+            coun = random.randint(0, count - 1)
+            user = online_users[coun]
             logging.warning(users)
             url = user.unique_url
             logging.warning(url)
@@ -200,8 +208,6 @@ class ChatHandler(webapp2.RequestHandler):
             holder = {'id': Rooms.user1}
             url = urllib.urlencode(holder)
             unique_url = ('/chat?' + url)
-        #for key in User.iter(keys_only=True):
-        #    i = i + 1
             cur_user = users.get_current_user()
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
@@ -215,7 +221,6 @@ class ChatHandler(webapp2.RequestHandler):
                     'state': user.state,
                     'bio': user.bio,
                     'picture': picture,
-                    'i': i,
                     'user1': Rooms.user1,
                     'User' : User
                 }
@@ -223,14 +228,12 @@ class ChatHandler(webapp2.RequestHandler):
             self.response.out.write(template.render(variables))
 
     def post(self):
-        i = 100
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
         message = self.request.get('message')
         if not cur_user:
             variables = {
-                'i': i,
                 'message': message
             }
             template= jinja_env.get_template('chatroom.html')
@@ -239,8 +242,6 @@ class ChatHandler(webapp2.RequestHandler):
             holder = {'id': Rooms.user1}
             url = urllib.urlencode(holder)
             unique_url = ('/chat?' + url)
-        #for key in User.iter(keys_only=True):
-        #    i = i + 1
             cur_user = users.get_current_user()
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
@@ -254,7 +255,6 @@ class ChatHandler(webapp2.RequestHandler):
                     'state': user.state,
                     'bio': user.bio,
                     'picture': picture,
-                    'i': i,
                     'user1': Rooms.user1,
                     'User' : User,
                     'message': message
