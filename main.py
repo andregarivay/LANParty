@@ -22,6 +22,7 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     identity = ndb.StringProperty()
     picture = ndb.BlobProperty()
+    unique_url = ndb.StringProperty()
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -79,6 +80,8 @@ class Profile(webapp2.RequestHandler):
         cur_user = users.get_current_user()
         user_key = ndb.Key('User', users.get_current_user().user_id())
         user = user_key.get()
+        holder = {'id': Rooms.user1}
+        url = urllib.urlencode(holder)
         user = User(
             first_name = self.request.get('first_name'),
             last_name = self.request.get('last_name'),
@@ -88,7 +91,8 @@ class Profile(webapp2.RequestHandler):
             bio = self.request.get('bio'),
             email = self.request.get('email'),
             identity = cur_user.user_id(),
-            picture = self.request.get('picture')
+            picture = self.request.get('picture'),
+            unique_url = '/chat?id=' + url
         )
         user.key = user_key
         user.put()
@@ -102,7 +106,8 @@ class Profile(webapp2.RequestHandler):
             'state': user.state,
             'bio': user.bio,
             'log_url': log_url,
-            'picture': picture
+            'picture': picture,
+            'unique_url': unique_url
         }
         template = jinja_env.get_template('profile.html')
         self.response.out.write(template.render(variables))
@@ -113,6 +118,9 @@ class Profile(webapp2.RequestHandler):
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
             user = user_key.get()
+            holder = {'id': Rooms.user1}
+            url = urllib.urlencode(holder)
+            unique_url = ('/chat?id=' + url)
             if user:
                 user.key = user_key
                 user.put()
@@ -129,7 +137,8 @@ class Profile(webapp2.RequestHandler):
                     'state': user.state,
                     'bio': user.bio,
                     'log_url': log_url,
-                    'picture': picture
+                    'picture': picture,
+                    'unique_url': unique_url
                 }
                 template = jinja_env.get_template('profile.html')
                 self.response.out.write(template.render(variables))
@@ -149,14 +158,13 @@ class Room(Rooms):
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
         i = 100
-        User = users.get_current_user()
-        if not User:
-            for user in User:
-                i = i + 1
+        user = User.query()
+        query = user.fetch()
+        cur_user = users.get_current_user()
+        if not cur_user:
             variables = {
                 'i': i
             }
-
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
         else:
@@ -181,6 +189,46 @@ class ChatHandler(webapp2.RequestHandler):
                     'i': i,
                     'user1': Rooms.user1,
                     'User' : User
+                }
+            template= jinja_env.get_template('chatroom.html')
+            self.response.out.write(template.render(variables))
+
+    def post(self):
+        i = 100
+        user = User.query()
+        query = user.fetch()
+        cur_user = users.get_current_user()
+        message = self.request.get('message')
+        if not cur_user:
+            variables = {
+                'i': i,
+                'message': message
+            }
+            template= jinja_env.get_template('chatroom.html')
+            self.response.out.write(template.render(variables))
+        else:
+            holder = {'id': Rooms.user1}
+            url = urllib.urlencode(holder)
+            unique_url = ('/chat?id=' + url)
+        #for key in User.iter(keys_only=True):
+        #    i = i + 1
+            cur_user = users.get_current_user()
+            identity = cur_user.user_id()
+            user_key = ndb.Key('User', identity)
+            user = user_key.get()
+            picture = "data:image;base64," + binascii.b2a_base64(user.picture)
+            variables = {
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'job': user.job,
+                    'city': user.city,
+                    'state': user.state,
+                    'bio': user.bio,
+                    'picture': picture,
+                    'i': i,
+                    'user1': Rooms.user1,
+                    'User' : User,
+                    'message': message
                 }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
