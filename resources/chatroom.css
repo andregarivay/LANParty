@@ -21,6 +21,7 @@
   color: darkBlue;
   font-family: sans-serif;
   text-align: center;
+  font-size: 16px;
 }
 
 img {
@@ -34,7 +35,21 @@ img {
 }
 #chatbox {
   position: fixed;
-  bottom: -340px;
+  bottom: 0px;
   left: 0px;
+  max-width: 1040px;
+  
+}
 
+input[type=submit] {
+  border: none; /*rewriting standard style, it is necessary to be able to change the size*/
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset outset;
+  border-radius: 10px;
+  font-size: inherit;
 }
