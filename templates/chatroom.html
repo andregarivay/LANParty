@@ -9,6 +9,10 @@
   <script src=" resources/chat.js"></script>
   <body>
 
+    <form method="get" action="/">
+      <input class="quitchat" type="submit" value="Quit Chat" style="background-color: #ADCBDA; color: black;"/>
+      </form>
+
     <div id = "chatbox">
       <form method="post" action="{{ unique_url }}">
         <div><textarea id="box" class="textarea"row="100" cols="75" placeholder="Chat here" ></textarea></div>
