@@ -9,8 +9,9 @@
   <script src=" resources/chat.js"></script>
   <body>
     <div id = "chat">
+      {{ message }}
       <form method="post" action="/chat">
-        <textarea row="100" cols="100" placeholder="Chat here" >Hello!</textarea>
+        <textarea row="100" cols="100" placeholder="Chat here" name="message">Hello!</textarea>
         <input class="button" type="submit" value="Send" style="background-color: #ADCBDA; color: black;">
       </form>
     </div>
