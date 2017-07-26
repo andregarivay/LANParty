@@ -32,13 +32,23 @@ img {
 .button {
 
 
+
 }
 #chatbox {
+<<<<<<< HEAD
+  display: flex;
+=======
+>>>>>>> 79c968c669543f467b02b0c3d993677b631d6bde
   position: fixed;
   bottom: 0px;
   left: 0px;
   max-width: 1040px;
 
+}
+#box{
+  width: auto;
+  max-width: 600px;
+  max-height: 80px;
 }
 
 input[type=submit] {
@@ -52,4 +62,15 @@ input[type=submit] {
   border-style: inset outset;
   border-radius: 10px;
   font-size: inherit;
+}
+
+.textarea {
+    width:90%;
+    max-width:90%;
+    max-height:30%;
+}
+
+body {
+    background-image: url("mainbackground.jpg");
+    background-repeat: no-repeat;
 }
