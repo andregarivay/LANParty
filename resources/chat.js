@@ -1,4 +1,4 @@
-$(document).ready(() =>       {
+$(document).ready(() => {
   setTimeout(checkChat, 30000);
   $("div").click(BoiWhat);
 });
