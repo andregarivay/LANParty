@@ -155,7 +155,8 @@ class ChatHandler(webapp2.RequestHandler):
         #    i = i + 1
         variables = {
                 'i': i,
-                'user1': Rooms.user1
+                'user1': Rooms.user1,
+                'User' : User
             }
         template= jinja_env.get_template('chatroom.html')
         self.response.out.write(template.render(variables))
