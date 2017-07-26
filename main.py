@@ -136,23 +136,40 @@ class Profile(webapp2.RequestHandler):
             else:
                 self.redirect('/signup')
 
-# class Rooms(ndb.Model):
-#     user1 = User.key
-#     #User2 = user.key
-#     comments = ndb.StringProperty()
-#
-# class Room(Rooms):
-#     count = ndb.IntegerProperty()
-#
-# class User_online(ndb.Model):
-#     last_time_seen = ChatHandler
-#     user1 = User.key
+
+class Rooms(ndb.Model):
+    user1 = User.key
+    #User2 = user.key
+    comments = ndb.StringProperty()
+
+class Room(Rooms):
+    count = ndb.IntegerProperty()
+
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_env.get_template('chatroom.html')
-        self.response.out.write(template.render())
-
+        i = 100
+        if not User:
+            for user in User:
+                i = i + 1
+            variables = {
+                'i': i
+            }
+            template= jinja_env.get_template('chatroom.html')
+            self.response.out.write(template.render(variables))
+        else:
+            holder = {'id': Rooms.user1}
+            url = urllib.urlencode(holder)
+            unique_url = ('/chat?id=' + url)
+        #for key in User.iter(keys_only=True):
+        #    i = i + 1
+        variables = {
+                'i': i,
+                'user1': Rooms.user1,
+                'User' : User
+            }
+        template= jinja_env.get_template('chatroom.html')
+        self.response.out.write(template.render(variables))
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),

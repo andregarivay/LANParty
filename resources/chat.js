@@ -1,13 +1,13 @@
-$(document).ready(){
-  setTimeout(checkChat, 60000);
+$(document).ready(() =>       {
+  setTimeout(checkChat, 30000);
   $("div").click(BoiWhat);
-}
+});
 
 function checkChat(){
   $.get(window.location);
-  setTimeout(checkChat, 60000);
+  setTimeout(checkChat, 30000);
 }
 
 function BoiWhat(){
-  $("div").css("background-color", "#FFFF9C").animate({ backgroundColor: "#FFFFFF"}, 1500);
+  console.log("I was clicked");
 }
