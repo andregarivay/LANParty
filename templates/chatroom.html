@@ -9,7 +9,10 @@
   <script src=" resources/chat.js"></script>
   <body>
     <div id = "chat">
-
+      <form method="post" action="/chat">
+        <textarea row="100" cols="100" placeholder="Chat here" >Hello!</textarea>
+        <input class="button" type="submit" value="Send" style="background-color: #ADCBDA; color: black;">
+      </form>
     </div>
 
 
@@ -20,6 +23,8 @@
         <h5>{{ city }}, {{ state }}</h5>
         <p>About Me: {{ bio }}</p>
     </div>
+
+
 
 
     <div id = "extra_resources">

@@ -27,3 +27,14 @@ img {
   max-width: 120px;
   max-height: 120px;
 }
+
+.button {
+
+
+}
+#chatbox {
+  position: fixed;
+  bottom: -340px;
+  left: 0px;
+
+}
