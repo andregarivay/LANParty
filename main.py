@@ -157,17 +157,34 @@ class Room(Rooms):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
+        i = 0
+=======
         i = 100
+>>>>>>> daa59b07d13c66e0691c40c472793a0c690406ad
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
         if not cur_user:
+<<<<<<< HEAD
+            for u in query:
+                i = 1 + i
+=======
+>>>>>>> daa59b07d13c66e0691c40c472793a0c690406ad
             variables = {
                 'i': i
             }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
         else:
+<<<<<<< HEAD
+            i = 1
+            variables = {
+
+            }
+            template= jinja_env.get_template('chatroom.html')
+            self.response.out.write(template.render(variables))
+=======
             holder = {'id': Rooms.user1}
             url = urllib.urlencode(holder)
             unique_url = ('/chat?id=' + url)
@@ -232,6 +249,7 @@ class ChatHandler(webapp2.RequestHandler):
                 }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
+>>>>>>> daa59b07d13c66e0691c40c472793a0c690406ad
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
