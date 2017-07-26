@@ -163,7 +163,19 @@ class ChatHandler(webapp2.RequestHandler):
             unique_url = ('/chat?id=' + url)
         #for key in User.iter(keys_only=True):
         #    i = i + 1
+        cur_user = users.get_current_user()
+        identity = cur_user.user_id()
+        user_key = ndb.Key('User', identity)
+        user = user_key.get()
+        picture = "data:image;base64," + binascii.b2a_base64(user.picture)
         variables = {
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'job': user.job,
+                'city': user.city,
+                'state': user.state,
+                'bio': user.bio,
+                'picture': picture,
                 'i': i,
                 'user1': Rooms.user1,
                 'User' : User
