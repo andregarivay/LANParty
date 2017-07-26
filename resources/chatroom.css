@@ -35,7 +35,10 @@ img {
 
 }
 #chatbox {
+<<<<<<< HEAD
   display: flex;
+=======
+>>>>>>> 79c968c669543f467b02b0c3d993677b631d6bde
   position: fixed;
   bottom: 0px;
   left: 0px;
