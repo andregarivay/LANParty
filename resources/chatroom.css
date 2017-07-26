@@ -4,8 +4,26 @@
   right: 0px;
   width: 400px;
   height: 724px;
-  background-color: powderBlue;
+  background-color: #ADCBDA;
   color: darkBlue;
   font-family: sans-serif;
   text-align: center;
+}
+
+
+#profile {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 400px;
+  height: 724px;
+  background-color: #979FA2;
+  color: darkBlue;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+img {
+  max-width: 120px;
+  max-height: 120px;
 }
