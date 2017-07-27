@@ -32,6 +32,34 @@ class MainPage(webapp2.RequestHandler):
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
 
+class Changes(webapp2.RequestHandler):
+    def get(self):
+        cur_user = users.get_current_user()
+        identity = cur_user.user_id()
+        user_key = ndb.Key('User', identity)
+        user = user_key.get()
+        holder = cur_user.user_id()
+        url = urllib.quote(holder)
+        unique_url = ('/chat?id=' + url)
+        user.key = user_key
+        user.put()
+        log_url = users.create_logout_url('/')
+        picture = "data:image;base64," + binascii.b2a_base64(user.picture)
+        variables = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'job': user.job,
+            'city': user.city,
+            'state': user.state,
+            'bio': user.bio,
+            'log_url': log_url,
+            'picture': picture,
+            'unique_url': unique_url
+        }
+        user.put()
+        template = jinja_env.get_template('profilechanges.html')
+        self.response.out.write(template.render(variables))
+
 class Send(webapp2.RequestHandler):
     def get(self):
         query = User.query()
@@ -287,4 +315,5 @@ app = webapp2.WSGIApplication([
     ('/chat', ChatHandler),
     ('/send', Send),
     ('/logout', Logout),
+    ('/changes', Changes)
 ], debug= True)
