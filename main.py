@@ -43,6 +43,8 @@ class Send(webapp2.RequestHandler):
                 user.put()
                 self.redirect(url)
                 break
+        template = jinja_env.get_template('sorry.html')
+        self.response.out.write(template.render())
 
 
 
