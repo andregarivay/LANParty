@@ -10,6 +10,11 @@
   text-align: center;
 }
 
+.random{
+  border: solid;
+  border-color: #0f00dd;
+  width: 400px;
+}
 
 #profile {
   position: fixed;

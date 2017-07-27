@@ -5,48 +5,19 @@
     <title>Hi, Alex!</title>
     <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
   </head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src=" resources/chat.js"></script>
   <body>
-<<<<<<< HEAD
-    <div id = "chat">
-<a href="{{ unique_url }}">lol</a>
-<h1>{{ i }}</h1>
-=======
+    <div id="message-box">
+    </div>
     <div id = "chatbox">
       <form method="post" action="/chat">
-        <textarea row="100" cols="75" placeholder="Chat here" >Hello!</textarea>
-        <input class="button" type="submit" value="Send" style="background-color: #ADCBDA; color: black;" />
+        <textarea id="chat-area" row="100" cols="75" placeholder="Chat here" ></textarea>
+        <input id="submit" class="button" type="button" value="Send" style="background-color: #ADCBDA; color: black;" />
       </form>
->>>>>>> daa59b07d13c66e0691c40c472793a0c690406ad
+      <h3>{{purple}}</h3>
     </div>
 
-
-    <div id = "profile">
-      <p><strong> You're Chatting With:</strong></p>
-      <img src="{{ picture }}" alt="picture" style="width: 240px">
-        <h3>{{ first_name }} {{ last_name }}</h3>
-        <h4> {{ job }}</h4>
-        <h5>{{ city }}, {{ state }}</h5>
-        <p>About Me: {{ bio }}</p>
-    </div>
-
-
-
-
-    <div id = "extra_resources">
-      <h4>Additional Resources:</h4>
-      <h5>National Suicide Prevention Lifeline:</h5>
-        <a href = "tel:+1-800-273-8255">1-800-273-8255</a>
-      <h5>Anxiety and Depression Association of America:</h5>
-        <a href = "https://www.adaa.org/living-with-anxiety/ask-and-learn/resources">adaa.org<a>
-      <h5>Veterans Crisis Line:</h5>
-        <a href = "tel:+1-800-273-8255">1-800-273-8255</a>
-        <br>
-        <a href = "https://www.veteranscrisisline.net/"> veteranscrisisline.net</a>
-      <h5>National Alliance on Mental Illness</h5>
-        <a href = "https://www.nami.org/Find-Support">nami.org</a>
-    </div>
 
 
   </body>
