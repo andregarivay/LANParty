@@ -16,12 +16,12 @@ function checkChat(){
     }
 }
 function pleaseWork(){
-  setTimeout()
+  setTimeout(callMe, 1000)
 
 }
 
 function callMe(text){
-  $("fieldset").get(window.location, x)
+  $("fieldset").get()
 }
 function BoiWhat(){
   console.log("I was clicked");

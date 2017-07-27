@@ -8,12 +8,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src=" resources/chat.js"></script>
   <body>
+
+    <a href="/"><img src="resources/returnhome.png" width="80" height="80"
+
     <div id="message-box">
     </div>
     <div id = "chatbox">
       <form method="post" action="/chat">
         <textarea id="chat-area" row="100" cols="75" placeholder="Chat here" ></textarea>
-        <input id="submit" class="button" type="button" value="Send" style="background-color: #ADCBDA; color: black;" />
+        <input id="submit" class="button" type="submit" value="Send" style="background-color: #ADCBDA; color: black;" />
       </form>
       <h3>{{purple}}</h3>
     </div>
