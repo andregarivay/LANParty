@@ -67,6 +67,9 @@ input[type = submit] {
   bottom: 0px;
   left: 830px;
 }
+fieldset{
+  font-size: 15px;
+}
 
 .textarea {
     width:115%;
