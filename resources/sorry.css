@@ -1,0 +1,12 @@
+h1 {
+    text-align: center;
+}
+
+
+#picture {
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  text-align: center;
+}

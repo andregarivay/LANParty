@@ -1,0 +1,43 @@
+<html>
+<head>
+<link rel="icon" type="image/png" href="../resources/tabimage.png"/>
+<title> Edit Your Profile - Hi, Alex! </title>
+<link rel="stylesheet" type="text/css" href="../resources/profilechanges.css">
+<style>
+body{
+  background-color: #C0DFEE;
+}
+
+</style>
+</head>
+<body>
+    <h1>Make edits to your profile here:</h1>
+
+    <form method="post" action="/profile" enctype="multipart/form-data">
+      <input class="inputboxes" type="text" name="first_name" placeholder="First Name" required='required'>
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name="last_name" placeholder="Last Name" required='required'>
+      <br/>
+      <br/>
+      <input class="inputboxes" type="email" name="email" placeholder="Gmail" required='required'>
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name="job" placeholder="Job Title" required='required'>
+      <br/>
+      <br/>
+      <input class="inputboxes" type="text" name = "city" placeholder="City" required='required'>
+      <input class="statebox" type="text" name="state" placeholder="State" required='required' maxlength="2"> <!-- Make sure two-letter state code is used -->
+      <br/>
+      <br/>
+      <textarea class="inputboxes" type="text" name="bio" placeholder="Short Bio" required='required' maxlength="600"></textarea>
+      <br>
+      <br>
+      <p> Select Profile Picture: </p> <input type="file" name="picture" required='required' maxlength="300">
+      <br>
+      <br>
+      <input class="button" type="submit" value="Update Account" style="background-color: #ADCBDA; color: black;">
+    </form>
+
+  </body>
+</html>
