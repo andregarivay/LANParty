@@ -4,6 +4,7 @@ import random
 import logging
 import os
 import json
+import random
 import webapp2
 import urllib
 import urllib2
@@ -29,6 +30,23 @@ class MainPage(webapp2.RequestHandler):
         log_url = ''
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
+
+class Send(webapp2.RequestHandler):
+    def get(self):
+        count = 0
+        query = User.query()
+        logging.warning(query)
+        online_users = query.fetch()
+        logging.warning(online_users)
+        for user in online_users:
+            count += 1
+        coun = count - 1
+        user = online_users[coun]
+        logging.warning(users)
+        url = user.unique_url
+        logging.warning(url)
+        self.redirect(url)
+
 
 class RoomHandler(webapp2.RequestHandler):
     def get(self):
@@ -92,7 +110,7 @@ class Profile(webapp2.RequestHandler):
             email = self.request.get('email'),
             identity = cur_user.user_id(),
             picture = self.request.get('picture'),
-            unique_url = '/chat?id=' + url
+            unique_url = '/chat?' + url
         )
         user.key = user_key
         user.put()
@@ -107,7 +125,7 @@ class Profile(webapp2.RequestHandler):
             'bio': user.bio,
             'log_url': log_url,
             'picture': picture,
-            'unique_url': unique_url
+            'unique_url': user.unique_url
         }
         template = jinja_env.get_template('profile.html')
         self.response.out.write(template.render(variables))
@@ -120,7 +138,7 @@ class Profile(webapp2.RequestHandler):
             user = user_key.get()
             holder = {'id': Rooms.user1}
             url = urllib.urlencode(holder)
-            unique_url = ('/chat?id=' + url)
+            unique_url = ('/chat?' + url)
             if user:
                 user.key = user_key
                 user.put()
@@ -157,19 +175,39 @@ class Room(Rooms):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        i = 0
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
         if not cur_user:
-            for u in query:
-                purple = [query]
+            count = 0
+            query = User.query()
+            logging.warning(query)
+            online_users = query.fetch()
+            logging.warning(online_users)
+            for user in online_users:
+                count += 1
+            coun = random.randint(0, count - 1)
+            user = online_users[coun]
+            logging.warning(users)
+            url = user.unique_url
+            logging.warning(url)
+            picture = "data:image;base64," + binascii.b2a_base64(user.picture)
             variables = {
-
+                'url': url,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'job': user.job,
+                'city': user.city,
+                'state': user.state,
+                'bio': user.bio,
+                'picture': picture,
             }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
         else:
+            holder = {'id': Rooms.user1}
+            url = urllib.urlencode(holder)
+            unique_url = ('/chat?' + url)
             cur_user = users.get_current_user()
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
@@ -183,7 +221,6 @@ class ChatHandler(webapp2.RequestHandler):
                     'state': user.state,
                     'bio': user.bio,
                     'picture': picture,
-                    'i': i,
                     'user1': Rooms.user1,
                     'User' : User
                 }
@@ -204,7 +241,7 @@ class ChatHandler(webapp2.RequestHandler):
         else:
             holder = {'id': Rooms.user1}
             url = urllib.urlencode(holder)
-            unique_url = ('/chat?id=' + url)
+            unique_url = ('/chat?' + url)
             cur_user = users.get_current_user()
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
@@ -230,5 +267,6 @@ app = webapp2.WSGIApplication([
     ('/signup', Signup),
     ('/login', Login),
     ('/profile', Profile),
-    ('/chat', ChatHandler)
+    ('/chat', ChatHandler),
+    ('/send', Send)
 ], debug= True)
