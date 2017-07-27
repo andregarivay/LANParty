@@ -24,6 +24,7 @@ class User(ndb.Model):
     identity = ndb.StringProperty()
     picture = ndb.BlobProperty()
     unique_url = ndb.StringProperty()
+    is_logged_in = ndb.BooleanProperty()
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -39,7 +40,8 @@ class Send(webapp2.RequestHandler):
         online_users = query.fetch()
         logging.warning(online_users)
         for user in online_users:
-            count += 1
+            if user.is_logged_in:
+                count += 1
         coun = count - 1
         user = online_users[coun]
         logging.warning(users)
@@ -52,6 +54,8 @@ class RoomHandler(webapp2.RequestHandler):
     def get(self):
         for room in Rooms:
             i=1
+
+
 
 class Login(webapp2.RequestHandler):
     def get(self):
@@ -110,7 +114,8 @@ class Profile(webapp2.RequestHandler):
             email = self.request.get('email'),
             identity = cur_user.user_id(),
             picture = self.request.get('picture'),
-            unique_url = '/chat?' + url
+            unique_url = '/chat?' + url,
+            is_logged_in = True
         )
         user.key = user_key
         user.put()
@@ -158,6 +163,7 @@ class Profile(webapp2.RequestHandler):
                     'picture': picture,
                     'unique_url': unique_url
                 }
+                user.is_logged_in = True
                 template = jinja_env.get_template('profile.html')
                 self.response.out.write(template.render(variables))
             else:
@@ -185,7 +191,8 @@ class ChatHandler(webapp2.RequestHandler):
             online_users = query.fetch()
             logging.warning(online_users)
             for user in online_users:
-                count += 1
+                if user.is_logged_in:
+                    count += 1
             coun = random.randint(0, count - 1)
             user = online_users[coun]
             logging.warning(users)
