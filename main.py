@@ -12,6 +12,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+message = ['Hey there Alex, how can I help?']
 
 class User(ndb.Model):
     first_name = ndb.StringProperty()
@@ -212,12 +213,11 @@ class Room(Rooms):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
-        messages = ["Hello welcome"]
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
-        logging.warning(messages)
-        logging.critical(messages)
+        logging.warning(message)
+        logging.critical(message)
         if not cur_user:
             ident = self.request.get('id')
             unique_url = '/chat?id=' + ident
@@ -237,6 +237,7 @@ class ChatHandler(webapp2.RequestHandler):
                 'state': host_user.state,
                 'bio': host_user.bio,
                 'picture': picture,
+                'message': message
             }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
@@ -257,23 +258,23 @@ class ChatHandler(webapp2.RequestHandler):
                     'bio': user.bio,
                     'picture': picture,
                     'user1': Rooms.user1,
-                    'User' : User
-
+                    'User' : User,
+                    'message': message
                     }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
 
     def post(self):
-        message = ['Hey there Alex, how can I help?']
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
-        message = self.request.get('message')
-        messages = messages.append(message)
+        messaged = self.request.get('message')
+        logging.warning(messaged)
+        message.append(messaged)
         logging.critical(message)
         if not cur_user:
             variables = {
-                'messages': messages
+                'messages': message
             }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
@@ -296,7 +297,7 @@ class ChatHandler(webapp2.RequestHandler):
                     'picture': picture,
                     'user1': Rooms.user1,
                     'User' : User,
-                    'messages': messages
+                    'messages': message
                 }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
