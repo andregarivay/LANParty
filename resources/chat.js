@@ -43,7 +43,7 @@ function getSuccess(){
 }
 
 function addChatMessage(text) {
-  $('#message-box').append("<fieldset><p>"+text+"</p></fieldset>");
+  $('#message-box').append("<p>"+text+"</p>");
   $.post(window.location, { 'message' : text }, postSuccess, "text");
   i++
 }
