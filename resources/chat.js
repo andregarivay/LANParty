@@ -20,15 +20,19 @@ function checkChat(){
       message.push(dog);
       $.post(window.location, { 'message' : dog }, postSuccess, "text");
       $("#chat-area").val('');
+      setTimeout(callMe(dog), 30000)
     }
 }
 function pleaseWork(text){
-  setTimeout(callMe, 1000);
+  setTimeout(callMe, 30000);
 }
 
-function callMe(){
-  var result = $.get(window.location, message, getSuccess, "text");
-  setTimeout(callMe, 1000);
+function callMe(text){
+  var result = $.post(window.location, {'message': text}, getSuccess, "message");
+  setTimeout(callMe, 30000);
+  if(result != ""){
+    addChatMessage(result)
+  }
 }
 
 function BoiWhat(){
@@ -41,7 +45,6 @@ function getSuccess(){
 
 function addChatMessage(text) {
   $('#message-box').append("<fieldset><p>"+text+"</p></fieldset>");
-  $.get(window.location)
 }
 
 function append_for_me(){

@@ -2,7 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="../resources/chatroom.css"/>
-    <title>Hi, Alex!</title>
+    <title>Hi, Alex! - Let's Chat</title>
     <link rel="icon" type="image/png" href="../resources/tabimage.png"/>
   </head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -11,12 +11,23 @@
 
     <a href="/"><img src="resources/returnhome.png" width="80" height="80"/></a>
 
+    <div>
+      {% for message in messages %}
+      {% if message != None %}
+      <ul>
+        <li>{{ message }}</li>
+        </ul>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+
     <div id="message-box">
     </div>
     <div id = "chatbox">
       <form method="post" action="/chat">
         <textarea id="chat-area" row="100" cols="75" placeholder="Chat here" ></textarea>
-        <input id="submit" class="button" type="butto" value="Send" style="background-color: #ADCBDA; color: black;" />
+        <input id="submit" class="button" type="button" value="Send" style="background-color: #ADCBDA; color: black;" />
       </form>
       <h3>{{purple}}</h3>
     </div>

@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+}
+
+.inputboxes{
+width: 200px;
+height: 25px;
+font-size: inherit;
+}
+
+.button{
+  text-align: center;
+  justify-content: center;
+}
+
+.statebox{
+  width: 50px;
+  height: 25px;
+  font-size: inherit;
+}
+
+.biobox{
+  width: 450;
+  font-size: inherit;
+
+}
+
+input[type=submit] {
+  border: none; /*rewriting standard style, it is necessary to be able to change the size*/
+  height: 100px;
+  width: 150px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset outset;
+  border-radius: 25px;
+  font-size: inherit;
+
+}

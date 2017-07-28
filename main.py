@@ -32,22 +32,48 @@ class MainPage(webapp2.RequestHandler):
         template = jinja_env.get_template('main.html')
         self.response.out.write(template.render())
 
+class Changes(webapp2.RequestHandler):
+    def get(self):
+        cur_user = users.get_current_user()
+        identity = cur_user.user_id()
+        user_key = ndb.Key('User', identity)
+        user = user_key.get()
+        holder = cur_user.user_id()
+        url = urllib.quote(holder)
+        unique_url = ('/chat?id=' + url)
+        user.key = user_key
+        user.put()
+        log_url = users.create_logout_url('/')
+        picture = "data:image;base64," + binascii.b2a_base64(user.picture)
+        variables = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'job': user.job,
+            'city': user.city,
+            'state': user.state,
+            'bio': user.bio,
+            'log_url': log_url,
+            'picture': picture,
+            'unique_url': unique_url
+        }
+        user.put()
+        template = jinja_env.get_template('profilechanges.html')
+        self.response.out.write(template.render(variables))
+
 class Send(webapp2.RequestHandler):
     def get(self):
-        count = 0
         query = User.query()
-        logging.warning(query)
         online_users = query.fetch()
-        logging.warning(online_users)
         for user in online_users:
             if user.is_logged_in:
-                count += 1
-        coun = count - 1
-        user = online_users[coun]
-        logging.warning(users)
-        url = user.unique_url
-        logging.warning(url)
-        self.redirect(url)
+                url = user.unique_url
+                user.is_logged_in = False
+                user.put()
+                self.redirect(url)
+                break
+        template = jinja_env.get_template('sorry.html')
+        self.response.out.write(template.render())
+
 
 
 class RoomHandler(webapp2.RequestHandler):
@@ -55,23 +81,27 @@ class RoomHandler(webapp2.RequestHandler):
         for room in Rooms:
             i=1
 
-
+class Logout(webapp2.RequestHandler):
+    def get(self):
+        log_url = users.create_logout_url('/')
+        cur_user = users.get_current_user()
+        identity = cur_user.user_id()
+        user_key = ndb.Key('User', identity)
+        user = user_key.get()
+        user.is_logged_in = False
+        user.put()
+        self.redirect(log_url)
 
 class Login(webapp2.RequestHandler):
     def get(self):
         cur_user = users.get_current_user()
-        logging.info(dir(cur_user))
         if cur_user:
             identity = cur_user.user_id()
-            logging.warning(identity)
             user_key = ndb.Key('User', identity)
-            logging.warning(user_key)
             user = user_key.get()
-            logging.warning(user)
             if user:
                 user.key = user_key
                 user.put()
-                logging.warning(user)
                 self.redirect('/profile')
             else:
                 self.redirect('/signup')
@@ -102,8 +132,8 @@ class Profile(webapp2.RequestHandler):
         cur_user = users.get_current_user()
         user_key = ndb.Key('User', users.get_current_user().user_id())
         user = user_key.get()
-        holder = {'id': Rooms.user1}
-        url = urllib.urlencode(holder)
+        holder = cur_user.user_id()
+        url = urllib.quote(holder)
         user = User(
             first_name = self.request.get('first_name'),
             last_name = self.request.get('last_name'),
@@ -114,7 +144,7 @@ class Profile(webapp2.RequestHandler):
             email = self.request.get('email'),
             identity = cur_user.user_id(),
             picture = self.request.get('picture'),
-            unique_url = '/chat?' + url,
+            unique_url = '/chat?id=' + url,
             is_logged_in = True
         )
         user.key = user_key
@@ -141,9 +171,9 @@ class Profile(webapp2.RequestHandler):
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
             user = user_key.get()
-            holder = {'id': Rooms.user1}
-            url = urllib.urlencode(holder)
-            unique_url = ('/chat?' + url)
+            holder = cur_user.user_id()
+            url = urllib.quote(holder)
+            unique_url = ('/chat?id=' + url)
             if user:
                 user.key = user_key
                 user.put()
@@ -164,6 +194,7 @@ class Profile(webapp2.RequestHandler):
                     'unique_url': unique_url
                 }
                 user.is_logged_in = True
+                user.put()
                 template = jinja_env.get_template('profile.html')
                 self.response.out.write(template.render(variables))
             else:
@@ -181,44 +212,38 @@ class Room(Rooms):
 
 class ChatHandler(webapp2.RequestHandler):
     def get(self):
+        messages = ["Hello welcome"]
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
-        message = self.request.get('message')
-        logging.warning(message)
+        logging.warning(messages)
+        logging.critical(messages)
         if not cur_user:
-            count = 0
+            ident = self.request.get('id')
+            unique_url = '/chat?id=' + ident
             query = User.query()
-            logging.warning(query)
-            online_users = query.fetch()
-            logging.warning(online_users)
-            for user in online_users:
-                if user.is_logged_in:
-                    count += 1
-            coun = random.randint(0, count - 1)
-            user = online_users[coun]
-            logging.warning(users)
-            url = user.unique_url
-            logging.warning(url)
-            picture = "data:image;base64," + binascii.b2a_base64(user.picture)
+            host_users = query.fetch()
+            host_user = None
+            for user in host_users:
+                if user.unique_url == unique_url:
+                    host_user = user
+            picture = "data:image;base64," + binascii.b2a_base64(host_user.picture)
+            host_user.is_logged_in = False
             variables = {
-                'url': url,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'job': user.job,
-                'city': user.city,
-                'state': user.state,
-                'bio': user.bio,
+                'first_name': host_user.first_name,
+                'last_name': host_user.last_name,
+                'job': host_user.job,
+                'city': host_user.city,
+                'state': host_user.state,
+                'bio': host_user.bio,
                 'picture': picture,
-                'message': message
             }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
         else:
-            holder = {'id': Rooms.user1}
-            url = urllib.urlencode(holder)
-            unique_url = ('/chat?' + url)
-            cur_user = users.get_current_user()
+            holder = cur_user.user_id()
+            url = urllib.quote(holder)
+            unique_url = ('/chat?id=' + url)
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
             user = user_key.get()
@@ -232,28 +257,30 @@ class ChatHandler(webapp2.RequestHandler):
                     'bio': user.bio,
                     'picture': picture,
                     'user1': Rooms.user1,
-                    'User' : User,
-                    'message': message
-                }
+                    'User' : User
+
+                    }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
 
     def post(self):
+        message = ['Hey there Alex, how can I help?']
         user = User.query()
         query = user.fetch()
         cur_user = users.get_current_user()
         message = self.request.get('message')
-        logging.warning(message)
+        messages = messages.append(message)
+        logging.critical(message)
         if not cur_user:
             variables = {
-                'message': message
+                'messages': messages
             }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
         else:
-            holder = {'id': Rooms.user1}
-            url = urllib.urlencode(holder)
-            unique_url = ('/chat?' + url)
+            holder = cur_user.user_id()
+            url = urllib.quote(holder)
+            unique_url = ('/chat?id=' + url)
             cur_user = users.get_current_user()
             identity = cur_user.user_id()
             user_key = ndb.Key('User', identity)
@@ -269,10 +296,11 @@ class ChatHandler(webapp2.RequestHandler):
                     'picture': picture,
                     'user1': Rooms.user1,
                     'User' : User,
-                    'message': message
+                    'messages': messages
                 }
             template= jinja_env.get_template('chatroom.html')
             self.response.out.write(template.render(variables))
+            self.response.out.write('message')
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
@@ -280,5 +308,7 @@ app = webapp2.WSGIApplication([
     ('/login', Login),
     ('/profile', Profile),
     ('/chat', ChatHandler),
-    ('/send', Send)
+    ('/send', Send),
+    ('/logout', Logout),
+    ('/changes', Changes)
 ], debug= True)
